@@ -1,5 +1,5 @@
 from datafilereaders.movie_file_csv_reader import MovieFileCSVReader
-from domainmodel.user import User, Review, Movie
+
 
 def main():
     filename = 'datafiles/Data1000Movies.csv'
