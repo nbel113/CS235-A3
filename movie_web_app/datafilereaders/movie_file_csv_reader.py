@@ -1,9 +1,6 @@
 import csv
 
-from domainmodel.movie import Movie
-from domainmodel.actor import Actor
-from domainmodel.genre import Genre
-from domainmodel.director import Director
+from movie_web_app.domain.model import Movie, Actor, Genre, Director
 
 class MovieFileCSVReader:
 

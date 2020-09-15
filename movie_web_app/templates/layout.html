@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %} - CS235 Flix</title>
+        <link
+          rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}"
+        />
+    </head>
+
+    <body>
+        {% include 'navigation.html' %}
+
+
+        <div class="main">
+            <header>
+                <h1>CS235 Flix</h1>
+            </header>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </body>
+
+</html>
