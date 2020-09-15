@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    margin: 10px 0px;
+    padding: 10px 10px;
+    font-size: 60px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: solid black 2px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: black;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    border-bottom: solid white 2px;
+}
+    .first{
+        border-top: solid white 2px;
+    }
+
+.sidenav a:hover {
+    color: black;
+    background-color: white;
+}
+
+.main {
+    margin-left: 200px; /* Same as the width of the sidenav */
+    font-size: 25px; /* Increased text to enable scrolling */
+    padding: 0px 20px;
+}
+
+table, tr, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    table-layout:fixed;
+    width: 100%;
+    padding: 10px;
+}
+td{
+    text-align: left;
+    font-size: 20px;
+}
+.list_button_set{
+    display: inline-flex;
+    justify-content: space-between;
+    width: 420px;
+}
+
+button {
+    display: block;
+    width: 200px;
+    border: solid black 2px;
+    padding: 14px 28px;
+    margin: 20px 0px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    border-spacing: 15px 0px;
+}
+
+.btn-general-disabled{
+    cursor: no-drop;
+}
+

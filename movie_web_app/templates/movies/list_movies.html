@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block title %}Page {{page_num}} - Movie List{% endblock %}
+
+{% block content %}
+
+    <p>Page {{page_num}} of {{last_page}}
+    <p>Movies {{page_total + 1}} to
+        {% if (page_num * movies_per_page) < movie_list_length %}
+            {{(page_num) * movies_per_page}}
+        {% else %}
+            {{movie_list_length}}
+        {% endif %}
+    out of {{movie_list_length}}
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Release Year</th>
+            <th>Genre(s)</th>
+            <th>Director</th>
+            <th>Actor(s)</th>
+            <th>Description</th>
+            <th>Runtime (Minutes)</th>
+        </tr>
+        {% for movie in listing %}
+            <tr>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.release_year }}</td>
+                <td>{{ movie.genres | join(", ") }}</td>
+                <td>{{ movie.director }}</td>
+                <td>{{ movie.actors | join(", ") }}</td>
+                <td>{{ movie.description }}</td>
+                <td>{{ movie.runtime_minutes }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <nav style="clear:both">
+        <div class="list_button_set" style="float:left">
+            {% if prev_article_url is not none%}
+                <button class="btn-general" onclick="location.href='{{first_article_url}}'">First</button>
+                <button class="btn-general" onclick="location.href='{{prev_article_url}}'">Previous</button>
+            {% else %}
+                <button class="btn-general-disabled" disabled>First</button>
+                <button class="btn-general-disabled" disabled>Previous</button>
+            {% endif %}
+        </div>
+        <div class="list_button_set" style="float:right">
+            {% if next_article_url is not none%}
+                <button class="btn-general" onclick="location.href='{{next_article_url}}'">Next</button>
+                <button class="btn-general" onclick="location.href='{{last_article_url}}'">Last</button>
+            {% else %}
+                <button class="btn-general-disabled" disabled>Next</button>
+                <button class="btn-general-disabled" disabled>Last</button>
+            {% endif %}
+        </div>
+    </nav>
+
+{% endblock %}

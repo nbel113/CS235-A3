@@ -29,5 +29,7 @@ def create_app(test_config=None):
         app.register_blueprint(home.home_blueprint)
         from .a_blueprints import movies
         app.register_blueprint(movies.movies_blueprint)
+        from .a_blueprints import search
+        app.register_blueprint(search.search_blueprint)
 
     return app

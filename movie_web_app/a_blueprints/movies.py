@@ -20,6 +20,8 @@ movies_blueprint = Blueprint(
 def list_movies():
     movies_per_page = 15
 
+
+
     # Read query parameters.
     page_num = request.args.get('page_num')
 

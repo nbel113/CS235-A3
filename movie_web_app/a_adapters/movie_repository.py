@@ -31,6 +31,7 @@ class MoviesRepository(AbstractRepository):
     def get_number_of_movies(self):
         return len(self.get_movies())
 
+
 def load_movies(data_path: str, repo: MoviesRepository):
     movie_file_reader = MovieFileCSVReader(os.path.join(data_path, 'Data1000Movies.csv'))
     movie_file_reader.read_csv_file()

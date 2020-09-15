@@ -1,0 +1,1 @@
+<div class="sidenav">    <ul>        <li><a class="first"                href="{{ url_for('home_bp.home') }}">Home</a></li>        <li><a href="{{ url_for('movies_bp.list_movies') }}">List all movies</a></li>    </ul></div>

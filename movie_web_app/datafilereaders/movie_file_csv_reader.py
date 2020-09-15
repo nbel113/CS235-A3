@@ -35,12 +35,16 @@ class MovieFileCSVReader:
                 release_year = int(row['Year'])
                 #print(f"Movie {index} with title: {title}, release year {release_year}")
                 movie = Movie(title, release_year)
+
                 if movie not in self.dataset_of_movies:
                     self.dataset_of_movies.append(movie)
 
                 actors = row['Actors'].split(",")
                 for actor in range(len(actors)):
                     actors[actor] = Actor(actors[actor].strip())
+            #added
+                    movie.actors.append(actors[actor].actor_full_name)
+            #end added
                     if actors[actor] not in self.dataset_of_actors:
                         self.dataset_of_actors.add(actors[actor])
                     #if row['Title'] == "Fury":
@@ -55,9 +59,18 @@ class MovieFileCSVReader:
                 genres = row['Genre'].split(",")
                 for genre in range(len(genres)):
                     genres[genre] = Genre(genres[genre].strip())
+            # added
+                    movie.genres.append(genres[genre].genre_name)
+            # end added
                     if genres[genre] not in self.dataset_of_genres:
                         self.dataset_of_genres.add(genres[genre])
                         #self.dataset_of_genres.append( Genre(genres[genre]) )
                 #print(genres)
+
+            # added
+                movie.director = row['Director']
+                movie.description = row['Description']
+                movie.runtime_minutes = int(row['Runtime (Minutes)'])
+            # end added
 
                 index += 1
