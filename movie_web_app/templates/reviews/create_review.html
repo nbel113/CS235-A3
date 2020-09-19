@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %}Create Review{% endblock %}
+
+{% block content %}
+    <button class="btn-general" onclick="location.href='{{review_url}}'">Back to Reviews</button>
+
+    <h2>Create Review</h2>
+    <div class="form-wrapper">
+        <form action="{{handler_url}}" method="post">
+            {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
+            <div class ="form-field">
+                <div class="form-parameter">
+                    <p>Movie Title</p>
+                        {{form.movie_title}}
+                </div>
+                <div class="form-parameter">
+                    <p>Review</p>
+                        {{form.review_text(size = 100, placeholder="Type your review", class="textarea", cols="50", rows="6", wrap="hard")}}
+                </div>
+                <div class="form-parameter">
+                    <p>Rating (1-10)</p>
+                        {{form.rating}}
+                </div>
+            </div>
+            {{ form.submit }}
+        </form>
+        <ul class="bullet-point-list">
+            {% if form.movie_title.errors or movie_title_error_message is not none and display%}
+                {% if movie_title_error_message is not none and display %}
+                    <li>
+                        {{ movie_title_error_message }}
+                    </li>
+                {% endif %}
+
+                {% for error in form.movie_title.errors %}
+                    <li>{{error}}</li>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.review_text.errors %}
+                {% for error in form.review_text.errors %}
+                    <li>{{error}}</li>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.rating.errors %}
+                {% for error in form.rating.errors %}
+                    <li>{{error}}</li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+
+    </div>
+{% endblock %}

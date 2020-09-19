@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block title %}Reviews{% endblock %}
+
+{% block content %}
+    <button class="btn-general" onclick="location.href='{{create_review_url}}'">Create Review</button>
+    <h2>Your Reviews:</h2>
+    <table>
+        {% if reviews|length > 0 %}
+        <p>Page {{page_num}} of {{last_page}}
+        <p>Reviews {{page_total + 1}} to
+            {% if (page_num * movies_per_page) < movie_list_length %}
+                {{(page_num) * movies_per_page}}
+            {% else %}
+                {{movie_list_length}}
+            {% endif %}
+        out of {{movie_list_length}}
+
+            <tr>
+                <th>Title</th>
+                <th>Review Text</th>
+                <th>Rating</th>
+                <th>Date & Time</th>
+                <th></th>
+                <th></th>
+            </tr>
+        {% else %}
+            <p>You have no reviews.
+        {% endif %}
+
+        {% for review in listing %}
+            <tr>
+                <td>{{ review.movie.title }}</td>
+                <td>{{ review.review_text }}</td>
+                <td>{{ review.rating }}</td>
+                <td>{{ review.timestamp }}</td>
+                <td> <button class="btn-general" onclick="location.href='{{first_article_url}}'">Edit Review</button> </td>
+                <td> <button class="btn-general" onclick="location.href='{{first_article_url}}'">Delete Review</button> </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+    {% if reviews|length > 0 %}
+        <nav style="clear:both">
+            <div class="list_button_set" style="float:left">
+                {% if prev_article_url is not none%}
+                    <button class="btn-general" onclick="location.href='{{first_article_url}}'">First</button>
+                    <button class="btn-general" onclick="location.href='{{prev_article_url}}'">Previous</button>
+                {% else %}
+                    <button class="btn-general-disabled" disabled>First</button>
+                    <button class="btn-general-disabled" disabled>Previous</button>
+                {% endif %}
+            </div>
+            <div class="list_button_set" style="float:right">
+                {% if next_article_url is not none%}
+                    <button class="btn-general" onclick="location.href='{{next_article_url}}'">Next</button>
+                    <button class="btn-general" onclick="location.href='{{last_article_url}}'">Last</button>
+                {% else %}
+                    <button class="btn-general-disabled" disabled>Next</button>
+                    <button class="btn-general-disabled" disabled>Last</button>
+                {% endif %}
+            </div>
+        </nav>
+    {% endif %}
+
+{% endblock %}

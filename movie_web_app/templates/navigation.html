@@ -1,8 +1,28 @@
 <div class="sidenav">
+
     <ul>
         <li><a class="first"
-                href="{{ url_for('home_bp.home') }}">Home</a></li>
-        <li><a href="{{ url_for('movies_bp.list_movies') }}">List all movies</a></li>
-        <li><a href="{{ url_for('home_bp.home') }}">Search Movies</a></li>
+               href="{{ url_for('home_bp.home') }}">Home</a></li>
+
+        <br>
+
+        <li><a class="first"
+               href="{{ url_for('authen_bp.register') }}">Register</a></li>
+        <li><a href="{{ url_for('authen_bp.login') }}">Login</a></li>
+        <li><a href="{{ url_for('authen_bp.logout') }}">Logout</a></li>
+
+
+        {% if 'user_name' in session %}
+        <br>
+        <li><a class="first"
+               href="{{ url_for('reviews_bp.reviews_by_user') }}">Your reviews</a></li>
+        <li><a href="{{ url_for('reviews_bp.reviews_by_user') }}">Your watchlist</a></li>
+        {% endif %}
+
+        <br>
+
+        <li><a class="first"
+               href="{{ url_for('movies_bp.list_movies') }}">List all movies</a></li>
+        <li><a href="{{ url_for('search_bp.search') }}">Search Movies</a></li>
     </ul>
 </div>

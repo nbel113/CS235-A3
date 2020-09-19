@@ -14,11 +14,9 @@
 
 
         <div class="main">
-            <header>
-                <h1>CS235 Flix</h1>
-            </header>
-            {% block content %}
+            {% include 'header.html' %}
 
+            {% block content %}
             {% endblock %}
         </div>
     </body>

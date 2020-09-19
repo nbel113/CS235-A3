@@ -13,6 +13,7 @@ class RepositoryException(Exception):
         pass
 
 class AbstractRepository(abc.ABC):
+
     #Movies
     @abc.abstractmethod
     def add_movie(self, movie: Movie):
@@ -23,22 +24,31 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_movies(self):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def get_number_of_movies(self):
+    def get_all_movies(self):
         raise NotImplementedError
 
     #Search
+    """
+
+    def get_title(self, id: int):
+        return next((person for person in self._people if person.id_number == id), None)
+    """
+
+    #Authen
     @abc.abstractmethod
-    def __iter__(self):
+    def add_user(self, user: User):
+        raise NotImplementedError
+    @abc.abstractmethod
+    def get_user(self, user_name) -> User:
+        raise NotImplementedError
+
+    #Reviews
+    @abc.abstractmethod
+    def add_review(self, user: User, review: Review):
+        """ Adds a Review to the repository."""
         raise NotImplementedError
 
     @abc.abstractmethod
-    def __next__(self) -> Person:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def get_person(self, id: int):
+    def get_reviews(self):
+        """ Returns the Comments stored in the repository. """
         raise NotImplementedError

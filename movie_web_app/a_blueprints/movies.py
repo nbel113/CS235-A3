@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 import math
 
 import movie_web_app.a_adapters.repository as repo
-from movie_web_app.a_adapters.movie_repository import MoviesRepository, populate, load_movies
+from movie_web_app.a_adapters.memory_repository import MemoryRepository, populate, load_movies
 
 from movie_web_app.domain.model import Director, Genre, Actor, Movie, Review, User, WatchList
 from movie_web_app.datafilereaders.movie_file_csv_reader import MovieFileCSVReader
@@ -19,22 +19,16 @@ movies_blueprint = Blueprint(
 @movies_blueprint.route('/list', methods=['GET'])
 def list_movies():
     movies_per_page = 15
-
-
-
     # Read query parameters.
     page_num = request.args.get('page_num')
 
-    if page_num is None:
-        # No page_num query parameter, so initialise page_num to start at the beginning.
-        page_num = 0
-    else:
-        # Convert cursor from string to int.
+    if page_num is not None:
+        # Convert page_num from string to int.
         page_num = int(page_num)
 
-    movie_list = repo.repo_instance.get_movies()
+    movie_list = repo.repo_instance.get_all_movies()
     last_page = math.ceil(len(movie_list) / movies_per_page)
-    if (page_num <= 0 or page_num > last_page):
+    if (page_num < 1 or page_num > last_page):
         return redirect(url_for('movies_bp.list_movies', page_num=1))
 
     first_article_url = None
@@ -46,8 +40,8 @@ def list_movies():
     listing = movie_list[page_total:page_total + movies_per_page]
     
     if page_num > 1:
-        prev_article_url = url_for('movies_bp.list_movies',  page_num=page_num - 1)
         first_article_url = url_for('movies_bp.list_movies', page_num=1)
+        prev_article_url = url_for('movies_bp.list_movies',  page_num=page_num - 1)
 
     if (page_num * movies_per_page) < len(movie_list):
         next_article_url = url_for('movies_bp.list_movies', page_num=page_num + 1)

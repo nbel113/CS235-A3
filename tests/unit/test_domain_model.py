@@ -53,12 +53,12 @@ def test_genre_init():
 #Actor
 def test_actor_init():
     actor1 = Actor("Angelina Jolie")
-    assert actor1.genre_name is "Angelina Jolie"
+    assert actor1.actor_full_name is "Angelina Jolie"
     assert repr(actor1) == "<Actor Angelina Jolie>"
     actor2 = Actor("")
-    assert actor2.genre_name is None
+    assert actor2.actor_full_name is None
     actor3 = Actor(42)
-    assert actor3.genre_name is None
+    assert actor3.actor_full_name is None
 
 def test_actor_add_and_check_colleague():
     actor1 = Actor("Angelina Jolie")

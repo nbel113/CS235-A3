@@ -2,8 +2,8 @@ import os
 import pytest
 
 from movie_web_app import create_app
-from movie_web_app.a_adapters import movie_repository
-from movie_web_app.a_adapters.movie_repository import MoviesRepository
+from movie_web_app.a_adapters import memory_repository
+from movie_web_app.a_adapters.memory_repository import MemoryRepository
 from movie_web_app.a_blueprints import movies
 
 TEST_DATA_PATH = os.path.join('C:', os.sep, 'Users', 'nigel', 'Desktop', 'University Work',
@@ -12,8 +12,8 @@ TEST_DATA_PATH = os.path.join('C:', os.sep, 'Users', 'nigel', 'Desktop', 'Univer
 
 @pytest.fixture
 def movies_repo():
-    repo = MoviesRepository()
-    movie_repository.populate(TEST_DATA_PATH, repo)
+    repo = MemoryRepository()
+    memory_repository.populate(TEST_DATA_PATH, repo)
     return repo
 
 @pytest.fixture

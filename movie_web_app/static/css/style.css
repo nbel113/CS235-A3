@@ -1,18 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    border-bottom: solid black 2px;
+    margin-bottom: 10px;
+}
+
+.header-element{
+    padding: 10px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
-    margin: 10px 0px;
-    padding: 10px 10px;
     font-size: 60px;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    border-bottom: solid black 2px;
+}
+
+#username {
+    font-size: 30px
 }
 
 .sidenav {
@@ -83,3 +99,26 @@ button {
     cursor: no-drop;
 }
 
+.form-parameter{
+    margin: 10px 0;
+}
+
+input, textarea {
+    width: 400px;
+    padding: 5px 5px;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+input[type=text]:focus {
+    border: 3px solid #555;
+}
+
+.submit-button{
+    width: 200px;
+}
+
+.bullet-point-list{
+    margin-left: 35px;
+    font-size: 20px;
+}

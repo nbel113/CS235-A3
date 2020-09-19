@@ -3,7 +3,7 @@ from flask import Flask
 import os
 
 import movie_web_app.a_adapters.repository as repo
-from movie_web_app.a_adapters.movie_repository import MoviesRepository, populate
+from movie_web_app.a_adapters.memory_repository import MemoryRepository, populate
 
 from movie_web_app.domain.model import Director, Genre, Actor, Movie, Review, User, WatchList
 from movie_web_app.datafilereaders.movie_file_csv_reader import MovieFileCSVReader
@@ -21,7 +21,7 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
         data_path = app.config['TEST_DATA_PATH']
 
-    repo.repo_instance = MoviesRepository()
+    repo.repo_instance = MemoryRepository()
     populate(data_path, repo.repo_instance)
 
     with app.app_context():
@@ -31,5 +31,9 @@ def create_app(test_config=None):
         app.register_blueprint(movies.movies_blueprint)
         from .a_blueprints import search
         app.register_blueprint(search.search_blueprint)
+        from .a_blueprints import authen
+        app.register_blueprint(authen.authen_blueprint)
+        from .a_blueprints import reviews
+        app.register_blueprint(reviews.reviews_blueprint)
 
     return app
