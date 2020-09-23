@@ -1,7 +1,7 @@
 # CompSci 235 A2 - CS235Flix - nbel113
 
 ## Description
-Nigel Bell's submission for CompSci 235's Assignment 2, based on the course's skeleton python project CS235Flix.
+Nigel Bell's submission for CompSci 235's Assignment 2, based on the course's skeleton Python project CS235Flix.
 
 * This web application demonstrates the use of Python's Flask framework. 
 * It makes use of libraries such as the Jinja templating library and WTForms. 
@@ -63,7 +63,7 @@ assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.
 You can then run tests from within PyCharm.
 
 
-##References:
+#References:
 * Favicon created using favicon.io https://favicon.io/emoji-favicons/film-projector/
 * https://stackoverflow.com/questions/35774060/determine-which-wtforms-button-was-pressed-in-a-flask-view
 * https://stackoverflow.com/questions/46761931/integerfield-not-validating-on-empty-string

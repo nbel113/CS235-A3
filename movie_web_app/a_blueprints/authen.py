@@ -17,9 +17,7 @@ def register():
     error_list = []
     form = RegistrationForm()
     if request.method == 'POST':
-
         #print(request.form['user_name'])
-
         try:
             user_name = form.user_name.data
             password = form.password.data

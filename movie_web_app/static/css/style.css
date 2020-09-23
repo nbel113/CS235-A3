@@ -97,7 +97,7 @@ button {
 .btn-general-disabled{
     cursor: no-drop;
 }
-.ud-button{  /*styling for the update(edit) and delete buttons, (the UD part of CRUD)
+.ud-button{  /*styling for the update(edit) and delete buttons, (the UD part of CRUD)*/
     margin: 0px auto;
 }
 .form_submit_button{
