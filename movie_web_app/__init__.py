@@ -27,8 +27,8 @@ def create_app(test_config=None):
     with app.app_context():
         from .a_blueprints import home
         app.register_blueprint(home.home_blueprint)
-        from .a_blueprints import movies
-        app.register_blueprint(movies.movies_blueprint)
+        from .a_blueprints import list_movies
+        app.register_blueprint(list_movies.movies_blueprint)
         from .a_blueprints import search
         app.register_blueprint(search.search_blueprint)
         from .a_blueprints import authen

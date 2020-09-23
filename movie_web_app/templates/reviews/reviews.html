@@ -15,7 +15,6 @@
                 {{movie_list_length}}
             {% endif %}
         out of {{movie_list_length}}
-
             <tr>
                 <th>Title</th>
                 <th>Review Text</th>
@@ -33,9 +32,33 @@
                 <td>{{ review.movie.title }}</td>
                 <td>{{ review.review_text }}</td>
                 <td>{{ review.rating }}</td>
-                <td>{{ review.timestamp }}</td>
-                <td> <button class="btn-general" onclick="location.href='{{first_article_url}}'">Edit Review</button> </td>
-                <td> <button class="btn-general" onclick="location.href='{{first_article_url}}'">Delete Review</button> </td>
+                <td>
+                    Time created: {{ review.timestamp }}
+                    <br>
+                    {% if review.timestamp != review.latest_edit %}
+                        Last edited: {{ review.latest_edit }}
+                    {% endif %}
+                </td>
+                <td>
+                    <button class="ud-button btn-general"
+                             onclick="location.href='{{
+                                url_for('reviews_bp.edit_review',
+                                    user = session['user_name'],
+                                    review_id = review.review_id
+                             )}}'">
+                        Edit Review
+                    </button>
+                </td>
+                <td>
+                    <button class="ud-button btn-general"
+                             onclick="location.href='{{
+                                url_for('reviews_bp.delete_review',
+                                    user = session['user_name'],
+                                    review_id = review.review_id
+                             )}}'">
+                        Delete Review
+                    </button>
+                </td>
             </tr>
         {% endfor %}
 
@@ -43,18 +66,18 @@
     {% if reviews|length > 0 %}
         <nav style="clear:both">
             <div class="list_button_set" style="float:left">
-                {% if prev_article_url is not none%}
-                    <button class="btn-general" onclick="location.href='{{first_article_url}}'">First</button>
-                    <button class="btn-general" onclick="location.href='{{prev_article_url}}'">Previous</button>
+                {% if prev_page_url is not none%}
+                    <button class="btn-general" onclick="location.href='{{first_page_url}}'">First</button>
+                    <button class="btn-general" onclick="location.href='{{prev_page_url}}'">Previous</button>
                 {% else %}
                     <button class="btn-general-disabled" disabled>First</button>
                     <button class="btn-general-disabled" disabled>Previous</button>
                 {% endif %}
             </div>
             <div class="list_button_set" style="float:right">
-                {% if next_article_url is not none%}
-                    <button class="btn-general" onclick="location.href='{{next_article_url}}'">Next</button>
-                    <button class="btn-general" onclick="location.href='{{last_article_url}}'">Last</button>
+                {% if next_page_url is not none%}
+                    <button class="btn-general" onclick="location.href='{{next_page_url}}'">Next</button>
+                    <button class="btn-general" onclick="location.href='{{last_page_url}}'">Last</button>
                 {% else %}
                     <button class="btn-general-disabled" disabled>Next</button>
                     <button class="btn-general-disabled" disabled>Last</button>

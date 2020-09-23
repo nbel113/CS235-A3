@@ -1,9 +1,10 @@
 import pytest
 from flask import session
 
-from movie_web_app.domain.model import Director, Genre, Actor, Movie, Review, User, WatchList
+from movie_web_app.domain.model import Director, Genre, Actor, Movie, Review, TempReview, User, WatchList
 from movie_web_app.datafilereaders.movie_file_csv_reader import MovieFileCSVReader
 from movie_web_app.activitysimulations.watchingsimulation import MovieWatchingSimulation
+
 
 #Director
 def test_director_init():
@@ -233,13 +234,21 @@ def test_movie_file_csv_reader():
     assert len(movie_file_reader.dataset_of_genres) == 20
 
     all_movies_sorted = sorted(movie_file_reader.dataset_of_movies)
-    print(f'first 3 unique directors of sorted dataset: {all_movies_sorted[0:3]}')
+    #print(f'first 3 unique movies of sorted dataset: {all_movies_sorted[0:3]}')
+    assert all_movies_sorted[0:3] == [Movie("(500) Days of Summer", 2009), Movie("10 Cloverfield Lane", 2016), Movie("10 Years", 2011)]
+
     all_actors_sorted = sorted(movie_file_reader.dataset_of_actors)
-    print(f'first 3 unique directors of sorted dataset: {all_actors_sorted[0:3]}')
+    #print(f'first 3 unique actors of sorted dataset: {all_actors_sorted[0:3]}')
+    assert all_actors_sorted[0:3] == [Actor("50 Cent"), Actor("A.C. Peterson"), Actor("AJ Michalka")]
+
     all_directors_sorted = sorted(movie_file_reader.dataset_of_directors)
-    print(f'first 3 unique directors of sorted dataset: {all_directors_sorted[0:3]}')
+    #print(f'first 3 unique directors of sorted dataset: {all_directors_sorted[0:3]}')
+    assert all_directors_sorted[0:3] == [Director("Aamir Khan"), Director("Abdellatif Kechiche"), Director("Adam Leon")]
+
     all_genres_sorted = sorted(movie_file_reader.dataset_of_genres)
-    print(f'first 3 unique directors of sorted dataset: {all_genres_sorted[0:3]}')
+    #print(f'first 3 unique genres of sorted dataset: {all_genres_sorted[0:3]}')
+    assert all_genres_sorted[0:3] == [Genre("Action"), Genre("Adventure"), Genre("Animation")]
+
 #Review:
 def test_review():
     movie = Movie("Moana", 2016)
@@ -250,53 +259,99 @@ def test_review():
     review3 = Review(movie, review_text, 0)
     review4 = Review(movie, review_text, 11)
 
-    print(review1.movie)
-    print("Review: {}".format(review1.review_text))
-    print("Rating: {}".format(review1.rating))
-    print("Timestamp1: {}".format(review1.timestamp))
-    print("Timestamp2: {}".format(review2.timestamp))
-    print(review1 == review2)
+    #print(review1.movie)
+    #print("Review: {}".format(review1.review_text))
+    #print("Rating: {}".format(review1.rating))
+    #print("Timestamp1: {}".format(review1.timestamp))
+    #print("Timestamp2: {}".format(review2.timestamp))
+    
+    #print(review1)
+    #print(review2)
+    #print(review3)
+    #print(review4)
+    #print(review1 == review2)
 
-    print(review1)
-    print(review2)
-    print(review3)
-    print(review4)
+    assert repr(review1) == "<Review <Movie Moana, 2016>, This movie was very enjoyable., 8>"
+    assert repr(review2) == "<Review <Movie Moana, 2016>, This movie was very enjoyable., 8>"
+    assert repr(review3) == "<Review None, None, None>"
+    assert repr(review4) == "<Review None, None, None>"
+    assert review1 == review2
+
+
+#TempReview:
+def test_temp_review():
+    movie = Movie("Moana", 2016)
+    review_text = "This movie was very enjoyable."
+    rating = 8
+    review1 = TempReview(movie, review_text, rating)
+    review2 = TempReview(movie, review_text, rating)
+    review3 = TempReview(movie, review_text, 0)
+    review4 = TempReview(movie, review_text, 11)
+
+    #print(review1.movie)
+    #print("Review: {}".format(review1.review_text))
+    #print("Rating: {}".format(review1.rating))
+    #print("Timestamp1: {}".format(review1.timestamp))
+    #print("Timestamp2: {}".format(review2.timestamp))
+    
+    #print(review1)
+    #print(review2)
+    #print(review3)
+    #print(review4)
+    #print(review1 == review2)
+
+    assert repr(review1) == "<TempReview <Movie Moana, 2016>, This movie was very enjoyable., 8>"
+    assert repr(review2) == "<TempReview <Movie Moana, 2016>, This movie was very enjoyable., 8>"
+    assert repr(review3) == "<TempReview <Movie Moana, 2016>, This movie was very enjoyable., 0>"
+    assert repr(review4) == "<TempReview <Movie Moana, 2016>, This movie was very enjoyable., 11>"
+    assert review1 == review2
 
 #User
 def test_user():  # add movie
     user1 = User('  Martin   ', 'pw12345')
-    print(user1.user_name)
+    #print(user1.user_name)
+    assert user1.user_name == "martin"
 
     user1 = User('Martin', 'pw12345')
     user2 = User('Ian', 'pw67890')
     user3 = User('Daniel', 'pw87465')
-    print(user1)
-    print(user2)
-    print(user3)
+
+    #print(user1)
+    #print(user2)
+    #print(user3)
+
+    assert repr(user1) == "<User martin>"
+    assert repr(user2) == "<User ian>"
+    assert repr(user3) == "<User daniel>"
 
     movie1 = Movie("Up", 2009)
     movie1.runtime_minutes = 150
     user1.watch_movie(movie1)
     user1.watch_movie(movie1)
-    print("Watched Movies:", user1.watched_movies)
-    print("Watching  Time:", user1.time_spent_watching_movies_minutes)
+
+    #print("Watched Movies:", user1.watched_movies)
+    #print("Watching Time:", user1.time_spent_watching_movies_minutes)
+
+    assert repr(user1.watched_movies) == "[<Movie Up, 2009>]"
+    assert user1.time_spent_watching_movies_minutes == 150
 
     review1 = Review(movie1, "test", 5)
     user1.add_review(review1)
     user1.add_review(review1)
 
-    print(user1.reviews)
+    #print(user1.reviews)
+    assert repr(user1.reviews) == "[<Review <Movie Up, 2009>, test, 5>]"
 
 #Watchlist
-def test_watchlist_first_test(): #add movie
+def test_watchlist_add_several():
     watchlist = WatchList()
-    print(f"Size of watchlist: {watchlist.size()}")
-    #assert watchlist.size() == 0
+    #print(f"Size of watchlist: {watchlist.size()}")
+    assert watchlist.size() == 0
     watchlist.add_movie(Movie("Moana", 2016))
     watchlist.add_movie(Movie("Ice Age", 2002))
     watchlist.add_movie(Movie("Guardians of the Galaxy", 2012))
-    print(watchlist.first_movie_in_watchlist())
-    #assert watchlist.first_movie_in_watchlist() == Movie("Moana", 2016)
+    #print(watchlist.first_movie_in_watchlist())
+    assert repr(watchlist.first_movie_in_watchlist()) == "<Movie Moana, 2016>"
 
 def test_watchlist_remove():
     watchlist = WatchList()
@@ -304,23 +359,23 @@ def test_watchlist_remove():
     watchlist.add_movie(Movie("Ice Age", 2002))
     watchlist.add_movie(Movie("Guardians of the Galaxy", 2012))
     watchlist.remove_movie(Movie("Moana", 2016))
-    print(watchlist.first_movie_in_watchlist())
-    assert watchlist.first_movie_in_watchlist() == Movie("Ice Age", 2002)
+    #print(watchlist.first_movie_in_watchlist())
+    assert repr(watchlist.first_movie_in_watchlist()) == "<Movie Ice Age, 2002>"
 
 def test_watchlist_valid_select():
     watchlist = WatchList()
     watchlist.add_movie(Movie("Moana", 2016))
     watchlist.add_movie(Movie("Ice Age", 2002))
     watchlist.add_movie(Movie("Guardians of the Galaxy", 2012))
-    print(watchlist.select_movie_to_watch(1))
-    assert watchlist.select_movie_to_watch(1) == Movie("Ice Age", 2002)
+    #print(watchlist.select_movie_to_watch(1))
+    assert repr(watchlist.select_movie_to_watch(1)) == "<Movie Ice Age, 2002>"
 
 def test_watchlist_invalid_select():
     watchlist = WatchList()
     watchlist.add_movie(Movie("Moana", 2016))
     watchlist.add_movie(Movie("Ice Age", 2002))
     watchlist.add_movie(Movie("Guardians of the Galaxy", 2012))
-    print(watchlist.select_movie_to_watch(3))
+    #print(watchlist.select_movie_to_watch(3))
     assert watchlist.select_movie_to_watch(3) == None
 
 def test_watchlist_size():
@@ -328,7 +383,7 @@ def test_watchlist_size():
     watchlist.add_movie(Movie("Moana", 2016))
     watchlist.add_movie(Movie("Ice Age", 2002))
     watchlist.add_movie(Movie("Guardians of the Galaxy", 2012))
-    print(watchlist.size())
+    #print(watchlist.size())
     assert watchlist.size() == 3
 
 def test_watchlist_first_movie_valid():
@@ -336,12 +391,12 @@ def test_watchlist_first_movie_valid():
     watchlist.add_movie(Movie("Moana", 2016))
     watchlist.add_movie(Movie("Ice Age", 2002))
     watchlist.add_movie(Movie("Guardians of the Galaxy", 2012))
-    print(watchlist.first_movie_in_watchlist())
-    assert watchlist.first_movie_in_watchlist() == Movie("Moana", 2016)
+    #print(watchlist.first_movie_in_watchlist())
+    assert repr(watchlist.first_movie_in_watchlist()) == "<Movie Moana, 2016>"
 
 def test_watchlist_first_movie_invalid():
     watchlist = WatchList()
-    print(watchlist.first_movie_in_watchlist())
+    #print(watchlist.first_movie_in_watchlist())
     assert watchlist.first_movie_in_watchlist() == None
 
 def test_watchlist_add_same_movie():
@@ -350,9 +405,16 @@ def test_watchlist_add_same_movie():
     watchlist.add_movie(Movie("Ice Age", 2002))
     watchlist.add_movie(Movie("Ice Age", 2002))
     watchlist_iter = iter(watchlist)
-    print(next(watchlist_iter))
-    print(next(watchlist_iter))
+
     #print(next(watchlist_iter))
+    #print(next(watchlist_iter))
+
+    assert repr(next(watchlist_iter)) == "<Movie Moana, 2016>"
+    assert repr(next(watchlist_iter)) == "<Movie Ice Age, 2002>"
+    try:
+        next(watchlist_iter)
+    except StopIteration:
+        assert True
 
 def test_watchlist_remove_movie_not_in_watchlist():
     watchlist = WatchList()
@@ -360,8 +422,13 @@ def test_watchlist_remove_movie_not_in_watchlist():
     watchlist.add_movie(Movie("Ice Age", 2002))
     watchlist.remove_movie(Movie("Guardians of the Galaxy", 2012))
     watchlist_iter = iter(watchlist)
-    print(next(watchlist_iter))
-    print(next(watchlist_iter))
+
+    #print(next(watchlist_iter))
+    #print(next(watchlist_iter))
+
+    assert repr(next(watchlist_iter)) == "<Movie Moana, 2016>"
+    assert repr(next(watchlist_iter)) == "<Movie Ice Age, 2002>"
+
     #print(next(watchlist_iter))
 
 def test_watchlist_iter_invalid():
@@ -375,9 +442,8 @@ def test_watchlist_iter_invalid():
         try:
             result = next(watchlist_iter)
         except StopIteration:
+            assert True
             break
-        else:
-            print(result)
 
 #Watching Simulator
 def test_watching_sim_add_review():
@@ -426,3 +492,11 @@ def test_watching_sim_review_average():
     a.add_movie_review(review4.movie, user1, review4.rating)
     a.add_movie_review(review5.movie, user2, review5.rating)
     a.add_movie_review(review6.movie, user1, review6.rating)
+
+    #print(a.get_movie_rating_average(movie1))
+    #print(a.get_movie_rating_average(movie2))
+    #print(a.get_movie_rating_average(movie3))
+
+    assert a.get_movie_rating_average(movie1) == "Average Rating: 6.33"
+    assert a.get_movie_rating_average(movie2) == "Average Rating: 8.0"
+    assert a.get_movie_rating_average(movie3) == "Average Rating: 3.0"

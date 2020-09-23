@@ -45,12 +45,13 @@ The *CS235-A2/.env* file contains variable settings. They are set with appropria
 
 
 ## Testing
-
-Testing requires that file *CS235-A2/tests/conftest.py* be edited to set the value of `TEST_DATA_PATH`. You should set this to the absolute path of the *CS235-A2/tests/data* directory. 
-Run testing with:
+NOTE: Referring to https://piazza.com/class/kd3xeoxyktkby?cid=234, Run testing with:
 ```
 python -m pytest
 ```
+
+
+Testing requires that file *CS235-A2/tests/conftest.py* be edited to set the value of `TEST_DATA_PATH`. You should set this to the absolute path of the *CS235-A2/tests/data* directory. 
 E.g. 
 
 `TEST_DATA_PATH = os.path.join('C:', os.sep, 'Users', 'ian', 'Documents', 'Python dev', 'COVID-19', 'tests', 'data')`
@@ -62,4 +63,7 @@ assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.
 You can then run tests from within PyCharm.
 
 
-
+##References:
+* Favicon created using favicon.io https://favicon.io/emoji-favicons/film-projector/
+* https://stackoverflow.com/questions/35774060/determine-which-wtforms-button-was-pressed-in-a-flask-view
+* https://stackoverflow.com/questions/46761931/integerfield-not-validating-on-empty-string

@@ -1,54 +1,36 @@
-<!-- https://www.blog.pythonlibrary.org/2017/12/13/flask-101-how-to-add-a-search-form/-->
-{% macro render_field(field) %}
-    <dt>{{ field.label }}
-    </dt><dd>{{ field(**kwargs)|safe }}
-    {% if field.errors %}
-        <ul class="errors">
-        {% for error in field.errors %}
-            <li>{{ error }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    </dd>
-{% endmacro %}
-
 {% extends 'layout.html' %}
-{% block title %} Search {% endblock %}
+{% block title %}Search{% endblock %}
 
 {% block content %}
     <h2>Search for movies:</h2>
     <form method="post">
         <div class="form-parameter">
             <p>Movie Title:</p>
-                {{ render_field(form.title_search) }}
+                {{ form.title_search }}
         </div>
         <div class="form-parameter">
             <p>Director:</p>
-                {{ render_field(form.director_search) }}
+                {{ form.director_search }}
         </div>
         <div class="form-parameter">
             <p>Actor(s):</p>
-                {{ render_field(form.actors_search) }}
+                {{ form.actors_search }}
         </div>
         <div class="form-parameter">
             <p>Genre(s):</p>
-                {{ render_field(form.genres_search) }}
+                {{ form.genres_search }}
         </div>
         {{ form.submit }}
     </form>
 
-    <!-- https://www.blog.pythonlibrary.org/2017/12/13/flask-101-how-to-add-a-search-form/-->
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
+    {% if error_list|length > 0 %}
         <h2>Warning:</h2>
             <ul class="bullet-point-list">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
+                {% for error in error_list %}
+                    <li>{{ error }}</li>
                 {% endfor %}
             </ul>
-        {% endif %}
-
-    {% endwith %}
+    {% endif %}
 
     <h2>Search functionality notes:</h2>
         <ul class="bullet-point-list">
@@ -61,6 +43,4 @@
                 <li>For example, 'star, space' in the title search box searches for movies with titles containing 'star' or 'space' in them.</li>
             </ul>
         </ul>
-
-
 {% endblock %}                                           

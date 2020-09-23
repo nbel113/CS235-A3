@@ -1,4 +1,5 @@
 from datetime import datetime
+import uuid #universially unique identifiers
 
 class Director:
     def __init__(self, director_full_name: str):
@@ -179,44 +180,130 @@ class Movie:
         return hash(unique_string)
 
 class Review:
+    #added review_id to model, since my program allows users to make reviews with the same movie title, review text and score
     def __init__(self, movie, review_text, rating):
+        self.__review_id = None
         self.__movie = None #Movie(None, None)
         self.__review_text = None
         self.__rating = None
         self.__timestamp = None #datetime.now()
+        self.__latest_edit = None
 
         if (type(movie) is not Movie) \
                 or (type(review_text) is not str) \
                 or (type(rating) is not int) \
                 or (rating < 1 or rating > 10):
+            self.__review_id = None
             self.__movie = None
             self.__review_text = None
             self.__rating = None
             self.__timestamp = None
+            self.__latest_edit = None
         else:
+            self.__review_id = uuid.uuid1()
             self.__movie = movie
             self.__review_text = review_text.strip()
             self.__rating = rating
             self.__timestamp = datetime.now()
+            self.__latest_edit = datetime.now()
+
+    #added setters for the properties - review_id doesn't need to change
+
+    @property
+    def review_id(self):
+        return self.__review_id
 
     @property
     def movie(self) -> Movie:
+        return self.__movie
+    @movie.setter
+    def movie(self, new_movie) -> str:
+        self.__movie = new_movie
         return self.__movie
 
     @property
     def review_text(self) -> str:
         return self.__review_text
+    @review_text.setter
+    def review_text(self, new_review_text) -> str:
+        self.__review_text = new_review_text
+        return self.__review_text
 
     @property
     def rating(self) -> int:
+        return self.__rating
+    @rating.setter
+    def rating(self, new_rating) -> int:
+        self.__rating = new_rating
         return self.__rating
 
     @property
     def timestamp(self) -> datetime:
         return self.__timestamp
+    @timestamp.setter
+    def timestamp(self, new_timestamp) -> datetime:
+        self.__new_timestamp = new_timestamp
+        return self.__timestamp
+
+    @property
+    def latest_edit(self) -> datetime:
+        return self.__latest_edit
+    @latest_edit.setter
+    def latest_edit(self, new_latest_edit) -> datetime:
+        self.__latest_edit = new_latest_edit
+        return self.__latest_edit
 
     def __repr__(self):
         return f"<Review {self.__movie}, {self.__review_text}, {self.__rating}>"
+
+    def __eq__(self, other):
+        if (self.__movie == other.__movie) \
+                and (self.__review_text == other.__review_text) \
+                and (self.__rating == other.__rating) \
+                and (self.__timestamp == other.__timestamp):
+            return True
+        return False
+
+#TempReview is a copy of Review, It is designed to store input from the edit review form.
+#If input for a property (eg review_text) is valid and not None/blank text (eg "" or " "), the original review will have that property updated with the input.
+class TempReview:
+    def __init__(self, movie: Movie, review_text, rating):
+        self.__movie = movie
+        self.__review_text = review_text
+        self.__rating = rating
+        self.__timestamp = datetime.now()
+
+    @property
+    def movie(self) -> Movie:
+        return self.__movie
+    @movie.setter
+    def movie(self, new_movie) -> str:
+        self.__movie = new_movie
+        return self.__movie
+    @property
+    def review_text(self) -> str:
+        return self.__review_text
+    @review_text.setter
+    def review_text(self, new_review_text) -> str:
+        self.__review_text = new_review_text
+        return self.__review_text
+    @property
+    def rating(self) -> int:
+        return self.__rating
+    @rating.setter
+    def rating(self, new_rating) -> int:
+        self.__rating = new_rating
+        return self.__rating
+    @property
+    def timestamp(self) -> datetime:
+        return self.__timestamp
+    @timestamp.setter
+    def timestamp(self, new_timestamp) -> datetime:
+        self.__new_timestamp = new_timestamp
+        return self.__timestamp
+
+    def __repr__(self):
+        return f"<TempReview {self.__movie}, {self.__review_text}, {self.__rating}>"
 
     def __eq__(self, other):
         if (self.__movie == other.__movie) \

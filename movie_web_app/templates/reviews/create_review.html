@@ -23,33 +23,27 @@
                         {{form.rating}}
                 </div>
             </div>
-            {{ form.submit }}
+            {{ form.submit(class_="form_submit_button") }}
         </form>
+
+    {% if error_list|length > 0 %}
+    <h2>Warning:</h2>
         <ul class="bullet-point-list">
-            {% if form.movie_title.errors or movie_title_error_message is not none and display%}
-                {% if movie_title_error_message is not none and display %}
-                    <li>
-                        {{ movie_title_error_message }}
-                    </li>
-                {% endif %}
-
-                {% for error in form.movie_title.errors %}
-                    <li>{{error}}</li>
-                {% endfor %}
-            {% endif %}
-
-            {% if form.review_text.errors %}
-                {% for error in form.review_text.errors %}
-                    <li>{{error}}</li>
-                {% endfor %}
-            {% endif %}
-
-            {% if form.rating.errors %}
-                {% for error in form.rating.errors %}
-                    <li>{{error}}</li>
-                {% endfor %}
-            {% endif %}
+            {% for error in error_list %}
+                <li>{{ error }}</li>
+            {% endfor %}
         </ul>
+    {% endif %}
 
     </div>
+    <h2>Create review notes:</h2>
+        <ul class="bullet-point-list">
+            <li>Movie title must be a movie from the system</li>
+                <ul class="bullet-point-list">
+                    <li>(check to see if your movie is available by using 'Search movies')</li>
+                </ul>
+            <li>The review must have some text within 'Review', and must not use profanity.</li>
+            <li>The rating must be between 1 to 10 (inclusive)</li>
+        </ul>
+
 {% endblock %}

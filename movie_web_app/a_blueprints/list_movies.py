@@ -1,16 +1,7 @@
 from flask import Blueprint, render_template, url_for, request, redirect
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
 import math
 
 import movie_web_app.a_adapters.repository as repo
-from movie_web_app.a_adapters.memory_repository import MemoryRepository, populate, load_movies
-
-from movie_web_app.domain.model import Director, Genre, Actor, Movie, Review, User, WatchList
-from movie_web_app.datafilereaders.movie_file_csv_reader import MovieFileCSVReader
-from movie_web_app.activitysimulations.watchingsimulation import MovieWatchingSimulation
-
 
 movies_blueprint = Blueprint(
     'movies_bp', __name__
@@ -31,37 +22,36 @@ def list_movies():
     if (page_num < 1 or page_num > last_page):
         return redirect(url_for('movies_bp.list_movies', page_num=1))
 
-    first_article_url = None
-    prev_article_url = None
-    next_article_url = None
-    last_article_url = None
+    first_page_url = None
+    prev_page_url = None
+    next_page_url = None
+    last_page_url = None
 
     page_total = (page_num - 1) * movies_per_page
     listing = movie_list[page_total:page_total + movies_per_page]
     
     if page_num > 1:
-        first_article_url = url_for('movies_bp.list_movies', page_num=1)
-        prev_article_url = url_for('movies_bp.list_movies',  page_num=page_num - 1)
+        first_page_url = url_for('movies_bp.list_movies', page_num=1)
+        prev_page_url = url_for('movies_bp.list_movies',  page_num=page_num - 1)
 
     if (page_num * movies_per_page) < len(movie_list):
-        next_article_url = url_for('movies_bp.list_movies', page_num=page_num + 1)
-        last_article_url = url_for('movies_bp.list_movies', page_num=last_page)
-
+        next_page_url = url_for('movies_bp.list_movies', page_num=page_num + 1)
+        last_page_url = url_for('movies_bp.list_movies', page_num=last_page)
 
     return render_template(
         'movies/list_movies.html',
-        page_num = page_num,
+        page_num=page_num,
         last_page=last_page,
-        listing = listing,
-        page_total = page_total,
+        listing=listing,
+        page_total=page_total,
         movies_per_page=movies_per_page,
         movie_list_length=len(movie_list),
 
-        first_article_url=first_article_url,
-        last_article_url = last_article_url,
-        next_article_url = next_article_url,
-        prev_article_url = prev_article_url,
-        list_movies_url = url_for('movies_bp.list_movies', page_num=1)
+        first_page_url=first_page_url,
+        prev_page_url=prev_page_url,
+        next_page_url=next_page_url,
+        last_page_url=last_page_url,
+        list_movies_url=url_for('movies_bp.list_movies', page_num=1)
     )
 
 @movies_blueprint.route('/list/')

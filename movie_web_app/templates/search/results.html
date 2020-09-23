@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block title %} Results {% endblock %}
+{% block title %}Results{% endblock %}
 
 {% block content %}
     <h2>Results for movies:</h2>
@@ -39,18 +39,18 @@
 
     <nav style="clear:both">
         <div class="list_button_set" style="float:left">
-            {% if prev_article_url is not none%}
-                <button class="btn-general" onclick="location.href='{{first_article_url}}'">First</button>
-                <button class="btn-general" onclick="location.href='{{prev_article_url}}'">Previous</button>
+            {% if prev_page_url is not none%}
+                <button class="btn-general" onclick="location.href='{{first_page_url}}'">First</button>
+                <button class="btn-general" onclick="location.href='{{prev_page_url}}'">Previous</button>
             {% else %}
                 <button class="btn-general-disabled" disabled>First</button>
                 <button class="btn-general-disabled" disabled>Previous</button>
             {% endif %}
         </div>
         <div class="list_button_set" style="float:right">
-            {% if next_article_url is not none%}
-                <button class="btn-general" onclick="location.href='{{next_article_url}}'">Next</button>
-                <button class="btn-general" onclick="location.href='{{last_article_url}}'">Last</button>
+            {% if next_page_url is not none%}
+                <button class="btn-general" onclick="location.href='{{next_page_url}}'">Next</button>
+                <button class="btn-general" onclick="location.href='{{last_page_url}}'">Last</button>
             {% else %}
                 <button class="btn-general-disabled" disabled>Next</button>
                 <button class="btn-general-disabled" disabled>Last</button>

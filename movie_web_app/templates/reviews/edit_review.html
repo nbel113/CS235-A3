@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block title %}Edit Review{% endblock %}
+
+{% block content %}
+    <button class="btn-general" onclick="location.href='{{url_for('reviews_bp.reviews_by_user')}}'">Back to Reviews</button>
+
+    <h2>Edit Review</h2>
+    <!-- BASED ON:
+    #davidism's answer to:
+    #https://stackoverflow.com/questions/35774060/determine-which-wtforms-button-was-pressed-in-a-flask-view
+
+    form.hidden_tag() is needed in order to determine which button was pressed
+    -->
+
+    <form method="POST">
+        {{form.hidden_tag()}}
+        {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
+        <div class ="form-field">
+            <div class="form-parameter">
+                <p>Movie Title</p>
+                    {{form.movie_title}}
+            </div>
+            <div class="form-parameter">
+                <p>Review</p>
+                    {{form.review_text(size = 100, placeholder="Type your review", class="textarea", cols="50", rows="6", wrap="hard")}}
+            </div>
+            <div class="form-parameter">
+                <p>Rating (1-10)</p>
+                    {{form.rating}}
+            </div>
+        </div>
+        {{form.submit_button(class_="form_submit_button")}}
+    </form>
+
+    {% if error_list|length > 0 %}
+    <h2>Warning:</h2>
+        <ul class="bullet-point-list">
+            {% for error in error_list %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>Edit review notes:</h2>
+        <ul class="bullet-point-list">
+            <li>Leave a field blank if you don't want to change it</li>
+            <li>Movie title must be a movie from the system</li>
+                <ul class="bullet-point-list">
+                    <li>(check to see if your movie is available by using 'Search movies')</li>
+                </ul>
+            <li>The review must have some text within 'Review', and must not use profanity.</li>
+            <li>The rating must be between 1 to 10 (inclusive)</li>
+        </ul>
+
+{% endblock %}

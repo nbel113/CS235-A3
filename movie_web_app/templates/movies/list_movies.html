@@ -1,18 +1,15 @@
 {% extends 'layout.html' %}
-
 {% block title %}Page {{page_num}} - Movie List{% endblock %}
-
 {% block content %}
 
-    <p>Page {{page_num}} of {{last_page}}
-    <p>Movies {{page_total + 1}} to
+    <p>Page {{ page_num }} of {{ last_page }}
+    <p>Movies {{ page_total + 1 }} to
         {% if (page_num * movies_per_page) < movie_list_length %}
-            {{(page_num) * movies_per_page}}
+            {{ (page_num) * movies_per_page }}
         {% else %}
-            {{movie_list_length}}
+            {{ movie_list_length }}
         {% endif %}
-    out of {{movie_list_length}}
-
+    out of {{ movie_list_length }}
     <table>
         <tr>
             <th>Title</th>
@@ -38,18 +35,18 @@
 
     <nav style="clear:both">
         <div class="list_button_set" style="float:left">
-            {% if prev_article_url is not none%}
-                <button class="btn-general" onclick="location.href='{{first_article_url}}'">First</button>
-                <button class="btn-general" onclick="location.href='{{prev_article_url}}'">Previous</button>
+            {% if prev_page_url is not none%}
+                <button class="btn-general" onclick="location.href='{{first_page_url}}'">First</button>
+                <button class="btn-general" onclick="location.href='{{prev_page_url}}'">Previous</button>
             {% else %}
                 <button class="btn-general-disabled" disabled>First</button>
                 <button class="btn-general-disabled" disabled>Previous</button>
             {% endif %}
         </div>
         <div class="list_button_set" style="float:right">
-            {% if next_article_url is not none%}
-                <button class="btn-general" onclick="location.href='{{next_article_url}}'">Next</button>
-                <button class="btn-general" onclick="location.href='{{last_article_url}}'">Last</button>
+            {% if next_page_url is not none%}
+                <button class="btn-general" onclick="location.href='{{next_page_url}}'">Next</button>
+                <button class="btn-general" onclick="location.href='{{last_page_url}}'">Last</button>
             {% else %}
                 <button class="btn-general-disabled" disabled>Next</button>
                 <button class="btn-general-disabled" disabled>Last</button>

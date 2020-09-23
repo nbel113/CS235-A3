@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %}Delete Review{% endblock %}
+
+{% block content %}
+    <button class="btn-general" onclick="location.href='{{url_for('reviews_bp.reviews_by_user')}}'">Back to Reviews</button>
+
+    <h2>Delete Review</h2>
+    <p>Are you sure you want to delete this review?
+
+    <!-- BASED ON:
+    #davidism's answer to:
+    #https://stackoverflow.com/questions/35774060/determine-which-wtforms-button-was-pressed-in-a-flask-view
+
+    form.hidden_tag() is needed in order to determine which button was pressed
+    -->
+    <form method="POST">
+        {{form.hidden_tag()}}
+        {{form.yes_button(class_="form_submit_button")}}
+        {{form.no_button(class_="form_submit_button")}}
+    </form>
+
+{% endblock %}

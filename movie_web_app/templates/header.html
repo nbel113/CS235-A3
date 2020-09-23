@@ -1,0 +1,11 @@
+<header>
+    <div class="header-element">
+        <h1>CS235 Flix</h1>
+    </div>
+    <div class="header-element">
+        <p id="username">
+            {% if 'user_name' in session %} User: {{ session['user_name'] }}
+            {% endif %}
+        </p>
+    </div>
+</header>
