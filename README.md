@@ -1,7 +1,7 @@
 # CompSci 235 A2 - CS235Flix - nbel113
 
 ## Description
-Nigel Bell's submission for CompSci 235's Assignment 2, based on the course's skeleton python project CS235Flix.
+Nigel Bell's submission for CompSci 235's Assignment 2, based on the course's skeleton Python project CS235Flix.
 
 * This web application demonstrates the use of Python's Flask framework. 
 * It makes use of libraries such as the Jinja templating library and WTForms. 
