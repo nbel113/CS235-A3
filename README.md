@@ -63,7 +63,7 @@ assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.
 You can then run tests from within PyCharm.
 
 
-##References:
+#References:
 * Favicon created using favicon.io https://favicon.io/emoji-favicons/film-projector/
 * https://stackoverflow.com/questions/35774060/determine-which-wtforms-button-was-pressed-in-a-flask-view
 * https://stackoverflow.com/questions/46761931/integerfield-not-validating-on-empty-string
