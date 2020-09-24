@@ -150,8 +150,8 @@ def test_create_review(client, authen):
             'rating': 7
         }
     )
-
     assert response.headers['Location'] == 'http://localhost/reviews'
+
 @pytest.mark.parametrize(('movie_title', 'review_text', 'rating', 'messages'), (
         ('', '', None,
             (b'Please provide a movie title for your review.',
@@ -259,6 +259,57 @@ def test_edit_review(client, authen):
     assert b'Split' in response4.data
     assert b'This is an edited review' in response4.data
     assert b'3' in response4.data
+
+def test_edit_review_just_one_field(client, authen):
+    # Login a user.
+    authen.login()
+    # Check that if we don't provide create_review with this user's username, it just redirects us to the reviews listing page
+    response = client.get('/create_review')
+    assert response.status_code == 302
+    assert response.headers['Location'] == 'http://localhost/reviews'
+
+    # Check that we can retrieve the create_review page for this user.
+    response = client.get('/create_review?user=asdfgh')
+    assert response.status_code == 200
+
+    # Check that we can successfully create a review by supplying a valid movie title, review text, and rating
+    response1 = client.post(
+        '/create_review?user=asdfgh',
+        data={
+            'movie_title': 'Star Trek',
+            'review_text': 'This is a review',
+            'rating': 7
+        }
+    )
+    assert response1.headers['Location'] == 'http://localhost/reviews'
+
+    # Next, check that the review has been added by returning back to the reviews page
+    # We know this is the case if the edit button for it is available, in which case we
+    # access said button's link
+    response2 = client.get('/reviews?page_num=1')
+    a = str(response2.data).find("/edit_review?user=asdfgh&amp;review_id=")
+    b = str(response2.data)[a:].find("\'")
+    # print(b)
+    link = str(response2.data)[a:a + b - 1]
+    link = link.replace("&amp;", "&")
+    #print(link)
+
+    # Next, access the edit page, provide values for the fields, and 'press' the Submit button to edit the review.
+    response3 = client.post(
+        link,
+        data={
+            'movie_title': '',
+            'review_text': 'This is an edited review',
+            'rating': '',
+            'submit_button': True #pressing the submit button
+        }
+    )
+    response4 = client.get('/reviews?page_num=1')
+    #print(response4.data)
+    assert b'Star Trek' in response4.data
+    assert b'This is an edited review' in response4.data
+    assert b'7' in response4.data
+
 
 @pytest.mark.parametrize(('movie_title', 'review_text', 'rating', 'submit_button', 'messages'), (
         ('notamovie', '', '', True,
