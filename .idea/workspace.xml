@@ -19,10 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="664fca4e-e362-42e7-b643-8312ff55d0aa" name="Default Changelist" comment="A3 Final Submission">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="664fca4e-e362-42e7-b643-8312ff55d0aa" name="Default Changelist" comment="A3 Submission" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -226,6 +223,14 @@
       <option name="presentableId" value="Default" />
       <updated>1603325161589</updated>
     </task>
+    <task id="LOCAL-00001" summary="A3 Submission">
+      <created>1604052940706</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1604052940706</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -241,6 +246,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="CS235 A3 Final Submission" />
     <MESSAGE value="A3 Submission" />
     <option name="LAST_COMMIT_MESSAGE" value="A3 Submission" />
   </component>
