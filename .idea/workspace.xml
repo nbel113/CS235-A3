@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="664fca4e-e362-42e7-b643-8312ff55d0aa" name="Default Changelist" comment="A3 Submission" />
+    <list default="true" id="664fca4e-e362-42e7-b643-8312ff55d0aa" name="Default Changelist" comment="A3 Final Submission">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -230,7 +232,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604052940706</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="A3 Final Submission">
+      <created>1604053008012</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604053008012</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -248,7 +257,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="CS235 A3 Final Submission" />
     <MESSAGE value="A3 Submission" />
-    <option name="LAST_COMMIT_MESSAGE" value="A3 Submission" />
+    <MESSAGE value="A3 Final Submission" />
+    <option name="LAST_COMMIT_MESSAGE" value="A3 Final Submission" />
   </component>
   <component name="WindowStateProjectService">
     <state x="845" y="383" key="#Notifications" timestamp="1604052628061">
@@ -287,10 +297,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1603508601720" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604052619356">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604053112365">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1604052619356" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1604053112365" />
     <state x="566" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1603690203791">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

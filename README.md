@@ -1,9 +1,5 @@
 # CompSci 235 A3 - CS235Flix - nbel113
 
-## Warning
-Please ignore the latest commit from main
-Please pull the latest commit from master, or the first commit from October 30th from main
-
 ## Description
 Nigel Bell's submission for CompSci 235's Assignment 3, based on the course's skeleton Python project CS235Flix.
 
