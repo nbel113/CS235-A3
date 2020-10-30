@@ -221,4 +221,3 @@ def test_can_delete_review(memory_repo):
     review_services.delete_review(new_username, review, memory_repo)
 
     assert review not in review_services.get_reviews_from_user(new_username, memory_repo)
-

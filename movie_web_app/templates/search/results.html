@@ -22,18 +22,33 @@
                 <th>Genre(s)</th>
                 <th>Director</th>
                 <th>Actor(s)</th>
+                <th>Description</th>
                 <th>Runtime (Minutes)</th>
             </tr>
             {% for movie in listing %}
+            {% if repo_used == "memory" %}
                 <tr>
                     <td>{{ movie.title }}</td>
                     <td>{{ movie.release_year }}</td>
                     <td>{{ movie.genres | join(", ") }}</td>
                     <td>{{ movie.director }}</td>
                     <td>{{ movie.actors | join(", ") }}</td>
+                    <td>{{ movie.description }}</td>
                     <td>{{ movie.runtime_minutes }}</td>
                 </tr>
-            {% endfor %}
+            {% endif %}
+            {% if repo_used == "database" %}
+                <tr>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.release_year }}</td>
+                    <td>{{ movie.genre_list | join(", ") }}</td>
+                    <td>{{ movie.director }}</td>
+                    <td>{{ movie.actor_list | join(", ") }}</td>
+                    <td>{{ movie.description }}</td>
+                    <td>{{ movie.runtime_minutes }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
         </table>
     </main>
 

@@ -12,9 +12,13 @@ class MovieFileCSVReader:
         self.__dataset_of_directors = set()
         self.__dataset_of_genres = set()
 
+        self.__subset_of_movie_directors = dict()
+
+
     @property
     def dataset_of_movies(self):
         return self.__dataset_of_movies
+
     @property
     def dataset_of_actors(self):
         return self.__dataset_of_actors
@@ -25,10 +29,13 @@ class MovieFileCSVReader:
     def dataset_of_genres(self):
         return self.__dataset_of_genres
 
+    @property
+    def subset_of_movie_directors(self):
+        return self.__subset_of_movie_directors
+
     def read_csv_file(self):
         with open(self.__file_name, mode='r', encoding='utf-8-sig') as csvfile:
             movie_file_reader = csv.DictReader(csvfile)
-
             index = 0
             for row in movie_file_reader:
                 title = row['Title']
@@ -40,10 +47,12 @@ class MovieFileCSVReader:
                     self.dataset_of_movies.append(movie)
 
                 actors = row['Actors'].split(",")
+                #print("~~~~~")
                 for actor in range(len(actors)):
                     actors[actor] = Actor(actors[actor].strip())
             #added
                     movie.actors.append(actors[actor].actor_full_name)
+                    #print(actors[actor].actor_full_name)
             #end added
                     if actors[actor] not in self.dataset_of_actors:
                         self.dataset_of_actors.add(actors[actor])
@@ -54,7 +63,7 @@ class MovieFileCSVReader:
                 director = Director(row['Director'])
                 if director not in self.dataset_of_directors:
                     self.dataset_of_directors.add(director)
-                #print(director)
+                #self.subset_of_movie_directors[str(title)] = []
 
                 genres = row['Genre'].split(",")
                 for genre in range(len(genres)):

@@ -99,7 +99,7 @@ class Movie:
         self.__actors = []
         self.__genres = []
         self.__runtime_minutes: int = 0
-        self.__metascore = 0
+        #self.__metascore = 0
 
         if (title == "") or (type(title) is not str) or (release_year < 1900) or (type(release_year) is not int):
             self.__title = None
@@ -328,7 +328,7 @@ class User:
             self.__password = None
             self.__watched_movies = None
             self.__reviews = None
-            self.__time_spent_watching_movies_minutes = None
+            self.__time_spent_watching_movies_minutes = 0
         else:
             self.__user_name = user_name.strip().lower()
             self.__password = password

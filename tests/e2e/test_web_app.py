@@ -3,38 +3,39 @@ from flask import session
 from movie_web_app.domain.model import Director, Genre, Actor, Movie, Review, TempReview, User, WatchList
 
 #home
-def test_home(client):
+def test_home(client):  #DB-PASS
     # Check that we can retrieve the home page.
     response = client.get('/')
     assert response.status_code == 200
     assert b'Home  - CS235 Flix' in response.data
 
+
 #list movies
-def test_movies_list(client):
+def test_movies_list(client):#DB-PASS
     # Check that we can retrieve the movies list page.
     response = client.get('/list?page_num=1')
     assert response.status_code == 200
     assert b'Page 1 - Movie List - CS235 Flix' in response.data
 
-def test_movies_list_no_number(client):
+def test_movies_list_no_number(client):#DB-PASS
     # Check that we can redirect to the first page of the movies list if no number is provided.
     response = client.get('/list/')
     assert response.status_code == 302
     assert b'Redirecting...' in response.data
 
-def test_movies_list_zero_number(client):
+def test_movies_list_zero_number(client):#DB-PASS
     # Check that we can redirect to the first page of the movies list if 0 is provided.
     response = client.get('/list?page_num=0')
     assert response.status_code == 302
     assert b'Redirecting...' in response.data
 
-def test_movies_list_negative_number(client):
+def test_movies_list_negative_number(client):#DB-PASS
     # Check that we can redirect to the first page of the movies list if a negative number is provided.
     response = client.get('/list/?page_num=-10')
     assert response.status_code == 302
     assert b'Redirecting...' in response.data
 
-def test_movies_list_index_out_of_bounds(client):
+def test_movies_list_index_out_of_bounds(client):#DB-PASS
     # Check that we can redirect to the first page of the movies list if page is provided.
     # Note that there are 15 movies per page, so with 1000 movies, there's a maximum of 67 pages
     response = client.get('/list/?page_num=100')
@@ -42,14 +43,14 @@ def test_movies_list_index_out_of_bounds(client):
     assert b'Redirecting...' in response.data
 
 #search
-def test_search(client):
+def test_search(client):#DB-PASS
     # Check that we can retrieve the search page.
     response = client.get('/search')
     assert response.status_code == 200
     assert b'Search - CS235 Flix' in response.data
 
 #auth
-def test_register(client):
+def test_register(client):#DB-PASS
     # Check that we retrieve the register page.
     response_code = client.get('/authen/register').status_code
     assert response_code == 200
@@ -72,7 +73,7 @@ def test_register(client):
         ('test', 'test', b'Your password is invalid, please refer to Account notes.'),
         ('asdfgh', '123Qweasd', b'Your username is already taken - please supply another.'),
 ))
-def test_register_with_invalid_input(client, user_name, password, message):
+def test_register_with_invalid_input(client, user_name, password, message):#DB-PASS
     # Check that attempting to register with invalid combinations of username and password generate appropriate error
     # messages.
     response = client.post(
@@ -84,7 +85,7 @@ def test_register_with_invalid_input(client, user_name, password, message):
 
     assert message in response.data
 
-def test_login(client, authen):
+def test_login(client, authen):#DB-PASS
     # Check that we can retrieve the login page.
     status_code = client.get('/authen/login').status_code
     assert status_code == 200
@@ -98,7 +99,7 @@ def test_login(client, authen):
         client.get('/')
         assert session['user_name'] == 'asdfgh'
 
-def test_logout(client, authen):
+def test_logout(client, authen):#DB-PASS
     # Login a user.
     authen.login()
 
@@ -108,28 +109,31 @@ def test_logout(client, authen):
         assert 'user_id' not in session
 
 #reviews
-def test_login_required_to_see_reviews(client):
+def test_login_required_to_see_reviews(client):#DB-PASS
     response = client.post('/reviews')
     #redirect to the login page
     assert response.status_code == 302
     assert response.headers['Location'] == 'http://localhost/authen/login'
-def test_login_required_to_create_review(client):
+
+def test_login_required_to_create_review(client):#DB-PASS
     response = client.post('/create_review')
     #redirect to the login page
     assert response.status_code == 302
     assert response.headers['Location'] == 'http://localhost/authen/login'
-def test_login_required_to_edit_review(client):
+
+def test_login_required_to_edit_review(client):#DB-PASS
     response = client.post('/edit_review')
     #redirect to the login page
     assert response.status_code == 302
     assert response.headers['Location'] == 'http://localhost/authen/login'
-def test_login_required_to_delete_review(client):
+
+def test_login_required_to_delete_review(client):#DB-PASS
     response = client.post('/delete_review')
     #redirect to the login page
     assert response.status_code == 302
     assert response.headers['Location'] == 'http://localhost/authen/login'
 
-def test_create_review(client, authen):
+def test_create_review(client, authen):#DB-PASS
     # Login a user.
     authen.login()
     # Check that if we don't provide create_review with this user's username, it just redirects us to the reviews listing page
@@ -187,7 +191,7 @@ def test_create_review(client, authen):
         ),
 
 ))
-def test_create_review_with_invalid_input(client, authen, movie_title, review_text, rating, messages):
+def test_create_review_with_invalid_input(client, authen, movie_title, review_text, rating, messages):#DB-PASS
     # Login a user.
     authen.login()
 
@@ -210,7 +214,7 @@ def test_create_review_with_invalid_input(client, authen, movie_title, review_te
     for message in messages:
         assert message in response.data
 
-def test_edit_review(client, authen):
+def test_edit_review(client, authen):#DB-PASS
     # Login a user.
     authen.login()
     # Check that if we don't provide create_review with this user's username, it just redirects us to the reviews listing page
@@ -260,7 +264,7 @@ def test_edit_review(client, authen):
     assert b'This is an edited review' in response4.data
     assert b'3' in response4.data
 
-def test_edit_review_just_one_field(client, authen):
+def test_edit_review_just_one_field(client, authen):#DB-PASS
     # Login a user.
     authen.login()
     # Check that if we don't provide create_review with this user's username, it just redirects us to the reviews listing page
@@ -310,7 +314,6 @@ def test_edit_review_just_one_field(client, authen):
     assert b'This is an edited review' in response4.data
     assert b'7' in response4.data
 
-
 @pytest.mark.parametrize(('movie_title', 'review_text', 'rating', 'submit_button', 'messages'), (
         ('notamovie', '', '', True,
             (b'This is not a movie in the system.',
@@ -345,7 +348,7 @@ def test_edit_review_just_one_field(client, authen):
             )
         ),
 ))
-def test_edit_review_with_invalid_input(client, authen, movie_title, review_text, rating, submit_button, messages):
+def test_edit_review_with_invalid_input(client, authen, movie_title, review_text, rating, submit_button, messages):#DB-PASS
     # Login a user.
     authen.login()
 #Create review
@@ -395,7 +398,7 @@ def test_edit_review_with_invalid_input(client, authen, movie_title, review_text
     for message in messages:
         assert message in response3.data
 
-def test_delete_review(client, authen):
+def test_delete_review(client, authen):#DB-PASS
     # Login a user.
     authen.login()
 
@@ -409,9 +412,12 @@ def test_delete_review(client, authen):
         }
     )
 
+
     #Next, check that the review has been added by returning back to the reviews page
     #We know this is the case if the delete button for it is available, in which case we
     #access said button's link
+
+
     response2 = client.get('/reviews?page_num=1')
     a = str(response2.data).find("/delete_review?user=asdfgh&amp;review_id=")
     b = str(response2.data)[a:].find("\'")
@@ -427,10 +433,9 @@ def test_delete_review(client, authen):
             'yes_button': True #'pressing' the yes button
         }
     )
-    #print(response3.data)
 
     #Finally, return back to the reviews listing page, so that we can check to see that
     #we deleted the review.
     response4 = client.get('/reviews?page_num=1')
-    #print(response4.data)
+
     assert b'You have no reviews.' in response4.data
