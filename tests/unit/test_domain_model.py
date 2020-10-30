@@ -4,6 +4,7 @@ from flask import session
 from movie_web_app.domain.model import Director, Genre, Actor, Movie, Review, TempReview, User, WatchList
 from movie_web_app.datafilereaders.movie_file_csv_reader import MovieFileCSVReader
 from movie_web_app.activitysimulations.watchingsimulation import MovieWatchingSimulation
+from movie_web_app import *
 
 
 #Director
@@ -224,7 +225,7 @@ def test_movie_director_handling():
 
 #Movie File CSV Reader
 def test_movie_file_csv_reader():
-    filename = 'tests/data/Data1000Movies.csv'
+    filename = "tests/data/database/Data1000Movies.csv"
     movie_file_reader = MovieFileCSVReader(filename)
     movie_file_reader.read_csv_file()
 

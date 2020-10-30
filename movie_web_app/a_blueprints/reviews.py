@@ -1,11 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, make_response
 from movie_web_app.a_blueprints.authen import login_required
 
+from movie_web_app import *
+
 import movie_web_app.a_adapters.repository as repo
 import movie_web_app.a_adapters.review_services as review_services
 
 from movie_web_app.a_adapters.repository import AbstractRepository
 from movie_web_app.a_adapters.memory_repository import MemoryRepository
+from movie_web_app.a_adapters.database_repository import *
 
 from movie_web_app.domain.model import Director, Genre, Actor, Movie, Review, TempReview, User, WatchList
 from movie_web_app.datafilereaders.movie_file_csv_reader import MovieFileCSVReader
@@ -24,6 +27,9 @@ reviews_blueprint = Blueprint(
 @reviews_blueprint.route('/reviews', methods=['GET', 'POST'])
 @login_required
 def reviews_by_user():
+
+    repo_string = get_repo_string()
+
     reviews_per_page = 5
     page_num = request.args.get('page_num')
 
@@ -42,7 +48,12 @@ def reviews_by_user():
 
     repo_inst = repo.repo_instance
     target_user = session["user_name"]
-    reviews_list = review_services.get_reviews_from_user(target_user, repo_inst)
+
+    if repo_string == "memory":
+        reviews_list = review_services.get_reviews_from_user(target_user, repo_inst)
+    if repo_string == "database":
+        reviews_list = repo_inst.get_reviews_from_user(target_user, repo_inst)
+
     last_page = math.ceil(len(reviews_list) / reviews_per_page)
 
     if (page_num < 1 or (page_num > last_page and last_page > 0)):
@@ -78,6 +89,7 @@ def reviews_by_user():
         page_num=page_num,
         last_page=last_page,
         listing=listing,
+        repo_string=repo_string,
         page_total=page_total,
         movies_per_page=reviews_per_page,
         movie_list_length=len(reviews_list),
@@ -130,10 +142,12 @@ def create_review():
                 error_list.append('Your review rating is out of range (1-10 inclusive).')
         else:
             error_list.append('Please provide an integer for your review rating.')
-        #print(error_list)
+
         if len(error_list) == 0:
             review = Review(movie, review_text, int(rating))
-            review_services.add_review(user, review)
+
+            repo_inst.add_review(user, review)          #for database
+            review_services.add_review(user, review)    #for memory
             return redirect(url_for('reviews_bp.reviews_by_user'))
 
     return render_template(
@@ -147,6 +161,8 @@ def create_review():
 @reviews_blueprint.route('/edit_review', methods=['GET', 'POST'])
 @login_required
 def edit_review():
+    repo_string = get_repo_string()
+
     error_list = []
     user_name = request.args.get('user')
     if 'user_name' not in session:
@@ -158,7 +174,10 @@ def edit_review():
     review_id = request.args.get('review_id')
     repo_inst = repo.repo_instance
 
-    review = review_services.get_review_by_user_and_id(session_user_name, review_id, repo_inst)
+    if repo_string == "memory":
+        review = review_services.get_review_by_user_and_id(session_user_name, review_id, repo_inst)
+    if repo_string == "database":
+        review = repo_inst.get_review_by_user_and_id(session_user_name, review_id, repo_inst)
 
     # BASED ON:
         # davidism's answer to:
@@ -186,7 +205,12 @@ def edit_review():
         #print(error_list)
         if form.submit_button.data and len(error_list) == 0:
             new_review = TempReview(movie, review_text, rating)
-            review_services.edit_review(review, new_review)
+
+            if repo_string == "memory":
+                review_services.edit_review(review, new_review)
+            if repo_string == "database":
+                repo_inst.edit_review(review, new_review)
+
             #print(new_review.timestamp)
             return redirect(url_for('reviews_bp.reviews_by_user'))
 
@@ -202,6 +226,7 @@ def edit_review():
 @reviews_blueprint.route('/delete_review', methods=['GET', 'POST'])
 @login_required
 def delete_review():
+    repo_string = get_repo_string()
     session_user_name = session['user_name']
     user_name = request.args.get('user')
     if user_name != session_user_name:
@@ -210,13 +235,16 @@ def delete_review():
     review_id = request.args.get('review_id')
     repo_inst = repo.repo_instance
 
-    #if the user goes back to the delete page of an already deleted/non-existent review, they get redirected back to the reviews page.
-    if review_services.get_review_by_user_and_id(session_user_name, review_id, repo_inst) is None:
-        return redirect(url_for('reviews_bp.reviews_by_user'))
+    # if the user goes back to the delete page of an already deleted/non-existent review, they get redirected back to the reviews page.
+    if repo_string == "memory":
+        if review_services.get_review_by_user_and_id(session_user_name, review_id, repo_inst) is None:
+            return redirect(url_for('reviews_bp.reviews_by_user'))
+        review = review_services.get_review_by_user_and_id(session_user_name, review_id, repo_inst)
 
-    #listing = [review]
-    review = review_services.get_review_by_user_and_id(session_user_name, review_id, repo_inst)
-    #print("Request method", request.method)
+    if repo_string == "database":
+        if repo_inst.get_review_by_user_and_id(session_user_name, review_id, repo_inst) is None:
+            return redirect(url_for('reviews_bp.reviews_by_user'))
+        review = repo_inst.get_review_by_user_and_id(session_user_name, review_id, repo_inst)
 
     # BASED ON:
         # davidism's answer to:
@@ -225,7 +253,10 @@ def delete_review():
 
     if request.method == 'POST':
         if form.yes_button.data:
-            review_services.delete_review(session_user_name, review, repo_inst)
+            if repo_string == "memory":
+                review_services.delete_review(session_user_name, review, repo_inst)
+            if repo_string == "database":
+                repo_inst.delete_review(session_user_name, review, repo_inst)
             return redirect(url_for('reviews_bp.reviews_by_user'))
         elif form.no_button.data:
             return redirect(url_for('reviews_bp.reviews_by_user'))

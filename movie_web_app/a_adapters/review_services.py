@@ -4,6 +4,9 @@ from movie_web_app.a_adapters.repository import AbstractRepository
 
 from movie_web_app.domain.model import Director, Genre, Actor, Movie, Review, TempReview, User, WatchList
 
+from movie_web_app import *
+
+
 class UnknownUserException(Exception):
     pass
 
@@ -53,6 +56,7 @@ def edit_review(review: Review, new_review: TempReview):
         review.rating = new_review.rating
         edit_occurred = True
     """
+    repo_string = get_repo_string()
 
     if not (new_review.movie is None or new_review.movie.title == ""):
         review.movie = new_review.movie

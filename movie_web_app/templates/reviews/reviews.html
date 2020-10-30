@@ -39,26 +39,55 @@
                         Last edited: {{ review.latest_edit }}
                     {% endif %}
                 </td>
-                <td>
-                    <button class="ud-button btn-general"
-                             onclick="location.href='{{
-                                url_for('reviews_bp.edit_review',
-                                    user = session['user_name'],
-                                    review_id = review.review_id
-                             )}}'">
-                        Edit Review
-                    </button>
-                </td>
-                <td>
-                    <button class="ud-button btn-general"
-                             onclick="location.href='{{
-                                url_for('reviews_bp.delete_review',
-                                    user = session['user_name'],
-                                    review_id = review.review_id
-                             )}}'">
-                        Delete Review
-                    </button>
-                </td>
+                {% if repo_string == "memory" %}
+                    <td>
+                        <button class="ud-button btn-general"
+                                 onclick="location.href='{{
+                                    url_for('reviews_bp.edit_review',
+                                        user = session['user_name'],
+                                        review_id = review.review_id
+                                    )
+                                 }}'">
+                            Edit Review
+                        </button> <!--from: review.review_id, to: review.reviewID -->
+                    </td>
+                    <td>
+                        <button class="ud-button btn-general"
+                                 onclick="location.href='{{
+                                    url_for('reviews_bp.delete_review',
+                                        user = session['user_name'],
+                                        review_id = review.review_id
+                                    )
+                                 }}'">
+                            Delete Review
+                        </button>
+                    </td>
+                {% endif %}
+                {% if repo_string == "database" %}
+                    <td>
+                        <button class="ud-button btn-general"
+                                 onclick="location.href='{{
+                                    url_for('reviews_bp.edit_review',
+                                        user = session['user_name'],
+                                        review_id = review.reviewID
+                                    )
+                                 }}'">
+                            Edit Review
+                        </button> <!--from: review.review_id, to: review.reviewID -->
+                    </td>
+                    <td>
+                        <button class="ud-button btn-general"
+                                 onclick="location.href='{{
+                                    url_for('reviews_bp.delete_review',
+                                        user = session['user_name'],
+                                        review_id = review.reviewID
+                                    )
+                                 }}'">
+                            Delete Review
+                        </button>
+                    </td>
+                {% endif %}
+
             </tr>
         {% endfor %}
 
