@@ -1,5 +1,10 @@
 # CompSci 235 A3 - CS235Flix - nbel113
 
+## Warning
+master is some commits behind main, due to issues with commits
+If the CS235Assignment2.pdf appears in the root of the repository, do not pull this repository.
+Instead pull the latest commit from master, or the first commit on October 30th from main.
+
 ## Description
 Nigel Bell's submission for CompSci 235's Assignment 3, based on the course's skeleton Python project CS235Flix.
 
